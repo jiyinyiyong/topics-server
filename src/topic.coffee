@@ -7,5 +7,9 @@ exports.Schema = new Schema
   url: String
   favIconUrl: String
   note: String
+  time: Date
 ,
   versionKey: no
+  autoIndex: yes
+
+exports.Schema.index time: 1

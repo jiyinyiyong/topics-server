@@ -4,6 +4,7 @@ mongoose = require 'mongoose'
 
 host = 'mongodb://topics:topics@localhost:27017/topics'
 mongoose.connect host
+mongoose.set 'debug', yes
 
 topicSchema = require('./topic').Schema
 userSchema = require('./user').Schema
@@ -11,15 +12,18 @@ userSchema = require('./user').Schema
 Topic = mongoose.model 'Topic', topicSchema
 User = mongoose.model 'User', userSchema
 
+Topic.on 'index', (err) ->
+  console.log err
+
 exports.all = (res) ->
-  Topic.find {}, (err, docs) ->
+  Topic.where().sort(time: -1).find {}, (err, docs) ->
     console.log err if err?
     res docs
 
 exports.del = (id, res) ->
   Topic.where().findOneAndRemove _id: id, (err, docs) ->
     console.log err if err?
-    console.log docs
+    console.log 'removing', docs, id
 
 exports.save = (data) ->
   topic = new Topic data
@@ -27,6 +31,8 @@ exports.save = (data) ->
   topic.save (err, docs) ->
     console.log err if err?
     console.log docs
+    Topic.ensureIndexes (err) ->
+      console.log 'index err:', err
 
 exports.change = (id, data, cb) ->
   Topic.update _id: id, data, (err, count) ->
