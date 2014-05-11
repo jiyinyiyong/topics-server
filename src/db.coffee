@@ -2,7 +2,12 @@
 mongoose = require 'mongoose'
 {generate} = require './hash'
 
-host = 'mongodb://topics:topics@localhost:27017/topics'
+config = require '../config'
+
+u = config.dbUser
+p = config.dbPass
+n = config.dbName
+host = "mongodb://#{u}:#{p}@localhost:27017/#{n}"
 mongoose.connect host
 mongoose.set 'debug', yes
 
