@@ -12,16 +12,16 @@ app.get '/topics', (req, res) ->
   db.all (docs) ->
     res.json docs
 
-app.post '/topic', (req, res) ->
-  console.log req.body
-  db.save title: 'test', url: 'test'
-  res.json status: 'ok'
-
 app.delete '/topic/:id', (req, res) ->
   db.del req.params.id
   res.json status: 'ok'
 
 app.use bodyParser()
+
+app.post '/topic', (req, res) ->
+  console.log req.body
+  db.save req.body
+  res.json status: 'ok'
 
 app.put '/topic/:id', (req, res) ->
   console.log req.body

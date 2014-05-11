@@ -9,6 +9,8 @@ mongoose.connect host
 topicSchema = new Schema
   title: String
   url: String
+  favIconUrl: String
+  note: String
 ,
   versionKey: no
 
@@ -26,6 +28,7 @@ exports.del = (id, res) ->
 
 exports.save = (data) ->
   topic = new Topic data
+  console.log topic, data
   topic.save (err, docs) ->
     console.log err if err?
     console.log docs
