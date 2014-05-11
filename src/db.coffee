@@ -1,18 +1,10 @@
 
 mongoose = require 'mongoose'
 
-Schema = mongoose.Schema
-
 host = 'mongodb://topics:topics@localhost:27017/topics'
 mongoose.connect host
 
-topicSchema = new Schema
-  title: String
-  url: String
-  favIconUrl: String
-  note: String
-,
-  versionKey: no
+topicSchema = require('./topic').Schema
 
 Topic = mongoose.model 'Topic', topicSchema
 
