@@ -13,7 +13,7 @@ exports.route = (req, res) ->
         status: 'ok'
       console.log data
       res.cookie 'token', user.token,
-        maxAge: 900000
+        maxAge: 90000000
         httpOnly: no
         domain: '.tiye.me'
         path: '/'

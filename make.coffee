@@ -19,8 +19,8 @@ target.user = ->
   User = mongoose.model 'User', userSchema
 
   owner = new User
-    name: 'test'
-    password: generate('')
+    name: config.name
+    password: generate(config.password)
     token: generate((new Date).toString())
 
   owner.save()

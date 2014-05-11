@@ -1,5 +1,5 @@
 [{
-  "name": "blog",
+  "name": "topics",
   "script": "./app.coffee",
   "env": {
     "PORT": 5011
