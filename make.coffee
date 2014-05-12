@@ -26,3 +26,13 @@ target.user = ->
   owner.save()
 
   console.log 'new user created', owner
+
+target.rsync = ->
+  mission.rsync
+    file: './'
+    options:
+      dest: 'tiye:~/server/topics-server/'
+      exclude: [
+        'node_modules/'
+        'config.coffee'
+      ]

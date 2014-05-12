@@ -20,6 +20,9 @@ app.use bodyParser()
 app.get '/topics', router.topics
 app.post '/auth', router.auth
 
+app.options '*', (req, res) ->
+  res.json status: yes
+
 app.use router.token
 
 app.get '/name', router.name

@@ -9,7 +9,7 @@ p = config.dbPass
 n = config.dbName
 host = "mongodb://#{u}:#{p}@localhost:27017/#{n}"
 mongoose.connect host
-mongoose.set 'debug', yes
+# mongoose.set 'debug', yes
 
 topicSchema = require('./topic').Schema
 userSchema = require('./user').Schema
