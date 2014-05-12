@@ -34,6 +34,14 @@ exports.more = (time, cb) ->
     console.log err if err?
     cb docs
 
+exports.search = (keyword, cb) ->
+  keyword = keyword.replace /\./g, '\\s'
+  query =
+    title: new RegExp keyword, 'i'
+  Topic.find query, null, sort: '-time', limit: 20, (err, docs) ->
+    console.log err if err?
+    cb docs
+
 exports.del = (id) ->
   Topic.where().findOneAndRemove _id: id, (err, docs) ->
     console.log err if err?

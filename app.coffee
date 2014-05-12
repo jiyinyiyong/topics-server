@@ -20,6 +20,7 @@ app.use bodyParser()
 app.get '/topics', router.topics
 app.get '/topics/:time', router.more
 app.post '/auth', router.auth
+app.get '/search', router.search
 
 app.options '*', (req, res) ->
   res.json status: yes
