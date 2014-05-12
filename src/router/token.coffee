@@ -8,7 +8,7 @@ exports.route = (req, res, next) ->
         req.user = user
         next()
       else
-        res.writeHeader 400
+        res.writeHeader 401
         res.end 'token failed to recognize'
   else
     res.writeHeader 400

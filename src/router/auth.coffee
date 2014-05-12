@@ -3,7 +3,9 @@ db = require '../db'
 
 exports.route = (req, res) ->
   password = req.body.password
-  console.log 'password', password
+  origin = req.headers.origin
+  domain = origin.match(/\.\w+\.\w+$/)?[0]
+  console.log 'cookie domain:', domain
   if (typeof password) isnt 'string'
     res.json error: 'no password'
   else db.auth password, (user) ->
@@ -15,7 +17,7 @@ exports.route = (req, res) ->
       res.cookie 'token', user.token,
         maxAge: 7 * 3600 * 24 * 1000
         httpOnly: no
-        domain: '.tiye.me'
+        domain: domain or '.tiye.me'
         path: '/'
       res.json data
     else

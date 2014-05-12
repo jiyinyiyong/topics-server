@@ -18,6 +18,7 @@ app.use bodyParser()
 
 
 app.get '/topics', router.topics
+app.get '/topics/:time', router.more
 app.post '/auth', router.auth
 
 app.options '*', (req, res) ->

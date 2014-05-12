@@ -20,12 +20,21 @@ User = mongoose.model 'User', userSchema
 Topic.on 'index', (err) ->
   console.log err
 
-exports.all = (res) ->
-  Topic.where().sort(time: -1).find {}, (err, docs) ->
+exports.all = (cb) ->
+  Topic.find {}, null, sort: '-time', limit: 20, (err, docs) ->
     console.log err if err?
-    res docs
+    cb docs
 
-exports.del = (id, res) ->
+exports.more = (time, cb) ->
+  query =
+    time:
+      $lt: time
+  console.log query
+  Topic.find query, null, sort: '-time', limit: 20, (err, docs) ->
+    console.log err if err?
+    cb docs
+
+exports.del = (id) ->
   Topic.where().findOneAndRemove _id: id, (err, docs) ->
     console.log err if err?
     console.log 'removing', docs, id
@@ -52,7 +61,6 @@ exports.auth = (password, cb) ->
       console.log err
       cb null
     else
-      console.log user
       user.token = generate (new Date).toString()
       user.save()
       cb user
