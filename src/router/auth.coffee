@@ -8,13 +8,13 @@ exports.route = (req, res) ->
   console.log 'cookie domain:', domain
   if (typeof password) isnt 'string'
     res.json error: 'no password'
-  else db.auth password, (user) ->
-    if user?
+  else db.auth password, (token) ->
+    if token?
       data =
-        name: user.name
+        name: token.name
         status: 'ok'
       console.log data
-      res.cookie 'token', user.token,
+      res.cookie 'token', token.hash,
         maxAge: 7 * 3600 * 24 * 1000
         httpOnly: no
         domain: domain or '.tiye.me'

@@ -13,9 +13,11 @@ mongoose.connect host
 
 topicSchema = require('./topic').Schema
 userSchema = require('./user').Schema
+tokenSchema = require('./token').Schema
 
 Topic = mongoose.model 'Topic', topicSchema
 User = mongoose.model 'User', userSchema
+Token = mongoose.model 'Token', tokenSchema
 
 Topic.on 'index', (err) ->
   console.log err
@@ -69,15 +71,23 @@ exports.auth = (password, cb) ->
       console.log err
       cb null
     else
-      user.token = generate (new Date).toString()
-      user.save()
-      cb user
+      tokenHash = generate (new Date).toString()
+      data =
+        hash: tokenHash
+        name: user.name
+        time: new Date
+      token = new Token data
+
+      console.log 'new token:', data, token
+
+      token.save()
+      cb token
 
 exports.findByToken = (token, cb) ->
-  User.where().findOne {token}, (err, user) ->
+  Token.where().findOne hash: token, (err, user) ->
     if err? or (not user?)
       console.log err
       cb null
     else
-      console.log user
+      # console.log user
       cb user
