@@ -59,6 +59,7 @@ exports.save = (data) ->
       console.log 'index err:', err
 
 exports.change = (id, data, cb) ->
+  delete data._id
   Topic.update _id: id, data, (err, count) ->
     console.log err if err?
     console.log 'updated count:', count
